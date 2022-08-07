@@ -34,7 +34,7 @@ class ZipcodeController extends Controller
         if(isset($zipcode)){
 
         $newdata = array('zip_code' => $id, 'locality' => strtoupper($zipcode->d_ciudad), 
-            'federal_entity' => array('key' => $zipcode->c_estado, 'name' =>  strtoupper($zipcode->d_estado), 'code' => "null"),
+            'federal_entity' => array('key' => $zipcode->c_estado, 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
             'settlements' => array(),
             'municipality' => array()
         );
