@@ -31,7 +31,7 @@ class ZipcodeController extends Controller
         $zipcode = Zipcode::where('d_codigo',$newid)->first();
         $newdata = [];
 
-        if(isset($zipcode->record)){
+        if(isset($zipcode)){
 
         $newdata = array('zip-code' => $id, 'locality' => strtoupper($zipcode->d_ciudad), 
             'federal_entity' => array('key' => $zipcode->c_estado, 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
