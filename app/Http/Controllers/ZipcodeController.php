@@ -31,7 +31,7 @@ class ZipcodeController extends Controller
         $zipcode = Zipcode::where('d_codigo',$newid)->first();
         $newdata = [];
 
-        if($zipcode){
+        if(isset($zipcode->record)){
 
         $newdata = array('zip-code' => $id, 'locality' => strtoupper($zipcode->d_ciudad), 
             'federal_entity' => array('key' => $zipcode->c_estado, 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
@@ -51,11 +51,10 @@ class ZipcodeController extends Controller
         $newdata['municipality']['name'] =  strtoupper($settle->D_mnpio) ;
         
 
-        return response()->json($newdata);
+        return response()->json($newdata, 200);
 
     }else {
-        return response()->json(['message' => 'No se ha encontrado ningun registro con ese codigo']);
-
+        return response()->json(['message' => 'No se ha encontrado ningun registro con ese codigo'], 404);
     }
         
     }
