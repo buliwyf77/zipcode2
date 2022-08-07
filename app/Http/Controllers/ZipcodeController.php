@@ -34,7 +34,7 @@ class ZipcodeController extends Controller
         if(isset($zipcode)){
 
         $newdata = array('zip_code' => $id, 'locality' => strtoupper($zipcode->d_ciudad), 
-            'federal_entity' => array('key' => $zipcode->c_estado, 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
+            'federal_entity' => array('key' => intval($zipcode->c_estado), 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
             'settlements' => array(),
             'municipality' => array()
         );
@@ -44,10 +44,10 @@ class ZipcodeController extends Controller
 
 
         foreach($zip as $settle) {
-            array_push($newdata['settlements'], array('key' => $settle->id_asenta_cpcons, 'name' =>  strtoupper($settle->d_asenta), 'zone_type' =>  strtoupper($settle->d_zona), 'settlement_type' => array('name' => $settle->d_tipo_asenta) ));
+            array_push($newdata['settlements'], array('key' => intval($settle->id_asenta_cpcons), 'name' =>  strtoupper($settle->d_asenta), 'zone_type' =>  strtoupper($settle->d_zona), 'settlement_type' => array('name' => $settle->d_tipo_asenta) ));
         }
 
-        $newdata['municipality']['key'] = $settle->c_mnpio;
+        $newdata['municipality']['key'] = intval($settle->c_mnpio);
         $newdata['municipality']['name'] =  strtoupper($settle->D_mnpio) ;
         
 
