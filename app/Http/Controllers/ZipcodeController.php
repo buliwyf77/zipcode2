@@ -28,22 +28,23 @@ class ZipcodeController extends Controller
     {
         $newid = intval($id);
 
-        $zipcode = Zipcode::where('d_codigo',$newid)->first();
+        $zipcode = Zipcode::where('d_codigo',$newid)->get();
         $newdata = [];
 
         if(isset($zipcode)){
+            $firstItem = $zipcode->first();
 
-        $newdata = array('zip_code' => $id, 'locality' => strtoupper($zipcode->d_ciudad), 
-            'federal_entity' => array('key' => intval($zipcode->c_estado), 'name' =>  strtoupper($zipcode->d_estado), 'code' => null),
+        $newdata = array('zip_code' => $id, 'locality' => strtoupper($firstItem->d_ciudad), 
+            'federal_entity' => array('key' => intval($firstItem->c_estado), 'name' =>  strtoupper($firstItem->d_estado), 'code' => null),
             'settlements' => array(),
             'municipality' => array()
         );
 
 
-        $zip = Zipcode::where('d_codigo',$newid)->get();
+        //$zip = Zipcode::where('d_codigo',$newid)->get();
 
 
-        foreach($zip as $settle) {
+        foreach($zipcode as $settle) {
             array_push($newdata['settlements'], array('key' => intval($settle->id_asenta_cpcons), 'name' =>  strtoupper($settle->d_asenta), 'zone_type' =>  strtoupper($settle->d_zona), 'settlement_type' => array('name' => $settle->d_tipo_asenta) ));
         }
 
