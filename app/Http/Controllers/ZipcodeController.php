@@ -37,8 +37,10 @@ class ZipcodeController extends Controller
         $newdata = array('zip_code' => $id, 'locality' => strtoupper($firstItem->d_ciudad), 
             'federal_entity' => array('key' => intval($firstItem->c_estado), 'name' =>  strtoupper($firstItem->d_estado), 'code' => null),
             'settlements' => array(),
-            'municipality' => array()
+            //'municipality' => array()
         );
+        $newdata['municipality']['key'] = intval($firstItem->c_mnpio);
+        $newdata['municipality']['name'] =  strtoupper($firstItem->D_mnpio) ;
 
 
         //$zip = Zipcode::where('d_codigo',$newid)->get();
@@ -48,8 +50,6 @@ class ZipcodeController extends Controller
             array_push($newdata['settlements'], array('key' => intval($settle->id_asenta_cpcons), 'name' =>  strtoupper($settle->d_asenta), 'zone_type' =>  strtoupper($settle->d_zona), 'settlement_type' => array('name' => $settle->d_tipo_asenta) ));
         }
 
-        $newdata['municipality']['key'] = intval($settle->c_mnpio);
-        $newdata['municipality']['name'] =  strtoupper($settle->D_mnpio) ;
         
 
         return response()->json($newdata, 200);
